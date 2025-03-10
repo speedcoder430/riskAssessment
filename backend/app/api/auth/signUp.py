@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, EmailStr
-from app.supabase_client.client import supabase
+from app.core.client import supabase
 from app.utils.logging import get_logger
 
 router = APIRouter()

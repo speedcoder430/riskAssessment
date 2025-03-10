@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.auth.signIn import router as signin_router
 from app.api.auth.signUp import router as signup_router
+from app.api.search.company import router as company_search_router
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -9,6 +10,7 @@ app = FastAPI()
 
 app.include_router(signin_router)
 app.include_router(signup_router)
+app.include_router(company_search_router)
 
 
 @app.get("/")

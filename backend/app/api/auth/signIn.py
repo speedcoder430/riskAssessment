@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, EmailStr
-from app.supabase_client.client import supabase
+from app.core.client import supabase
 from app.utils.logging import get_logger
 
 router = APIRouter()
@@ -19,7 +19,7 @@ async def signin(request: SignInRequest):
             {"email": request.email, "password": request.password}
         )
 
-        if not response:
+        if not response or not response.session.access_token:
             logger.warning(f"Failed login attempt for email: {request.email}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
