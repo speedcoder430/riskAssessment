@@ -35,7 +35,11 @@ async def signup(request: SignUpRequest):
             )
 
         logger.info(f"User created successfully: {request.email}")
-        return {"message": "User created successfully", "user": response}
+        return {
+            "access_token": response.session.access_token,
+            "refresh_token": response.session.refresh_token,
+            "token_type": "bearer",
+        }
 
     except ValueError as e:
         logger.error(f"ValueError during sign-up: {e}")
