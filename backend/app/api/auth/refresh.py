@@ -1,5 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
-from pydantic import BaseModel
+from fastapi import APIRouter, HTTPException, status
 from app.core.client import supabase
 from app.utils.logging import get_logger
 
