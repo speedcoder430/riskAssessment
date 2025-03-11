@@ -54,7 +54,7 @@ async def search_company(company_id: str, company_location: str, authorization: 
             
             links.append(f"https://www.hithorizons.com/search?Name={company_id}&Address={company_location}")
 
-            cache[company_id] = links
+            cache[company_id] = {"links": links}
 
             return {"links": links}
 
