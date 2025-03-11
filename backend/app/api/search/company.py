@@ -56,7 +56,7 @@ async def search_company(company_id: str, company_location: str, authorization: 
 
             cache[company_id] = links
 
-            return links
+            return {"links": links}
 
         except requests.exceptions.RequestException as e:
             logger.error(f"Request error while fetching search results: {e}")
@@ -78,4 +78,4 @@ async def search_company(company_id: str, company_location: str, authorization: 
         
         links.append(f"https://www.hithorizons.com/search?Name={company_id}&Address={company_location}")
         
-        return links
+        return {"links": links}
