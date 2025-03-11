@@ -18,7 +18,7 @@ async def signup(request: SignUpRequest):
         if len(request.password) < 8:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                error="Password must be at least 8 characters long.",
+                detail="Password must be at least 8 characters long.",
             )
 
         response = supabase.auth.sign_up(
@@ -31,7 +31,7 @@ async def signup(request: SignUpRequest):
             )
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                error=response["error"]["message"],
+                detail=response["error"]["message"],
             )
 
         logger.info(f"User created successfully: {request.email}")
@@ -51,12 +51,12 @@ async def signup(request: SignUpRequest):
         logger.error("Failed to connect to Supabase service")
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            error="Service temporarily unavailable. Please try again later.",
+            detail="Service temporarily unavailable. Please try again later.",
         )
 
     except Exception as e:
         logger.error(f"{e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            error=f"{e}",
+            detail=f"{e}",
         )

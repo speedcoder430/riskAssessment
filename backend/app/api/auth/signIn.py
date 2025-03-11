@@ -23,7 +23,7 @@ async def signin(request: SignInRequest):
             logger.warning(f"Failed login attempt for email: {request.email}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                error="Invalid email or password",
+                detail="Invalid email or password",
             )
 
         logger.info(f"User signed in successfully: {request.email}")
@@ -43,12 +43,12 @@ async def signin(request: SignInRequest):
         logger.error("Failed to connect to Supabase service")
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            error="Service temporarily unavailable. Please try again later.",
+            detail="Service temporarily unavailable. Please try again later.",
         )
 
     except Exception as e:
         logger.error(f"Unexpected error during sign-in: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            error=f"{e}",
+            detail=f"{e}",
         )
