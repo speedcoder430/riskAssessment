@@ -1,9 +1,10 @@
 import os
 import requests
-from fastapi import APIRouter, HTTPException, status, Response
+from fastapi import APIRouter, HTTPException, status, Response, Header
 from pydantic import BaseModel
 from cachetools import TTLCache
 from app.utils.logging import get_logger
+from app.utils.verifyToken import verify_token
 
 router = APIRouter()
 logger = get_logger(__name__)
@@ -20,7 +21,12 @@ class LocationRequest(BaseModel):
 
 
 @router.post("/api/maps/company")
-async def get_google_maps_image(location: LocationRequest):
+async def get_google_maps_image(
+    location: LocationRequest, authorization: str = Header(...)
+):
+    # Verify the token from the authorization header
+    await verify_token(authorization)
+
     if not GOOGLE_API_KEY:
         logger.error("Google Maps API key is missing.")
         raise HTTPException(
